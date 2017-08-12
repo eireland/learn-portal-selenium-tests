@@ -3,8 +3,10 @@ require './search_page_object'
 
 url = "https://learn.concord.org/search"
 $test_screenshot_dir = "#{Dir.home}/Sites/learn_material_screenshot_results/test_screenshots/"
-# `rm -rf #{$test_screenshot_dir}`
-# `mkdir -p #{$test_screenshot_dir}`
+# $test_screenshot_dir = "./test_screenshots/"
+
+`rm -rf #{$test_screenshot_dir}`
+`mkdir -p #{$test_screenshot_dir}`
 
 def verify_materials(ksearch)
   page_num=1
@@ -25,6 +27,7 @@ def verify_materials(ksearch)
     material_num=0
     # 2. Get a list of Preview buttons, and click it that many times css: '.button' with 'Preview' text
     num_materials = ksearch.get_num_material
+    material_titles = ksearch.get_material_names
     puts "num materials length is #{num_materials.length}"
     while material_num <=num_materials.length - 1
       puts "material num is #{material_num}"
@@ -34,7 +37,7 @@ def verify_materials(ksearch)
       tab_handles=ksearch.get_tab_handles
       ksearch.switch_to_tab(tab_handles[1])
       sleep(3)
-      doc_title = ksearch.get_page_title
+      doc_title = material_titles[material_num]
       ksearch.save_screenshot($test_screenshot_dir, doc_title) # Take screenshot
       ksearch.close_tab(tab_handles[1])
       ksearch.switch_to_tab(tab_handles[0])

@@ -10,6 +10,7 @@ class SearchPageObject < PortalBaseObject
   TOTAL_NUM_MATERIALS = {css: '.materials_container > div:nth-child(2) > p:nth-child(1) > span:nth-child(1) > b:nth-child(2)'}
   NEXT_PAGE = {css: '.next'}
   PREVIEW_BUTTON = {xpath: '//a[contains(text(),"Preview")]'}
+  MATERIAL_TITLE = {css: ".material_list_item"}
 
   def initialize()
     puts "Initializing"
@@ -61,6 +62,15 @@ class SearchPageObject < PortalBaseObject
     return num_material
   end
 
+  def get_material_names
+    puts "in get material names"
+    material_titles = []
+    material_locs = find_all(MATERIAL_TITLE)
+    material_locs.each do |material_loc|
+      material_titles.push(material_loc.attribute('data-material_name'))
+    end
+    return material_titles
+  end
 
   private
   def verify_element(element)
