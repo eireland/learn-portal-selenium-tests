@@ -16,36 +16,78 @@ class PortalBaseObject
   def setup_caps(platform, browser)
     puts "In setup_caps #{platform}, #{browser}"
     caps = Selenium::WebDriver::Remote::Capabilities.new
-    caps[:platform] = platform
-    caps[:browserName] = browser
-    caps[:logging_prefs] = {:browser => "ALL"}
+    if browser == "iPad"
+      caps['appiumVersion'] = '1.6.3'
+      caps['deviceName'] = 'iPad Simulator'
+      caps['platformName'] = 'iOS'
+      caps['platformVersion'] = '9.3'
+      caps['deviceOrientation'] = 'landscape'
+      caps['browserName'] = 'Safari'
+      caps['rotatable'] = true
+    elsif browser == "Android" #Need an Android Emulator that runs Chrome instead of generic Browser
+      caps['appiumVersion'] = '1.6.3'
+      caps['platformName'] = 'Android'
+      caps['platformVersion'] = '6.0'
+      caps['browserName'] ='Chrome'
+      caps['deviceName'] = 'Android Emulator'
+      caps['deviceOrientation'] = 'landscape'
+      caps['nativeWebScreenshot'] = true
+      caps['rotatable'] = true
+    else
+      caps['platform'] = platform
+      caps['browserName'] = browser
+      caps['logging_prefs'] = {:browser => "ALL"}
+    end
+    puts "Caps are #{caps}"
     return caps
   end
 
-  # def setup_remote(caps)
+  #does not work for tests that need to open a CODAP file
+  def setup_remote(caps)
+    puts "in setup_remote #{caps}"
+    @@driver = Selenium::WebDriver.for(:remote,
+                                       :url => "http://eireland:b64ffb1e-a71d-40db-a73c-67a8b43620b6@ondemand.saucelabs.com:80/wd/hub",
+                                       :desired_capabilities => caps)
+  rescue Exception => e
+    puts e.message
+    puts "Could not start driver #{@@driver}"
+    exit
+  end
+  #
+  # def setup_grid(caps)
   #   puts "in setup_remote #{caps}"
   #   @@driver = Selenium::WebDriver.for (
-  #     :remote,
-  #     :url=> 'http://localhost:4444/wd/hub',
-  #     :desired_capabilities=> caps )
-  #   rescue Exception => e
-  #     puts e.message
-  #     puts "Could not start driver #{@@driver}"
-  #     exit
+  #       :remote,
+  #       :url=> 'http://localhost:4444/wd/hub',
+  #       :desired_capabilities=> caps )
+  # rescue Exception => e
+  #   puts e.message
+  #   puts "Could not start driver #{@@driver}"
+  #   exit
   # end
 
   def teardown
     @@driver.quit
   end
 
+  def manage_window_size
+    target_size = Selenium::WebDriver::Dimension.new(1680,1050)
+    @@driver.manage.window.size = target_size
+  end
+
   def visit(url)
     puts "IN VISIT"
     @@driver.get(url)
+    manage_window_size
   end
 
   def verify_page(title)
     puts "Page title is #{@@driver.title}"
     expect(@@driver.title).to include(title)
+  end
+
+  def get_page_title
+    return @@driver.title
   end
 
   def find(locator)
@@ -68,9 +110,12 @@ class PortalBaseObject
     find(locator).click
   end
 
+  def hover(locator)
+    @@driver.action.move_to(locator).perform
+  end
+
   def displayed?(locator)
     @@driver.find_element(locator).displayed?
-    puts "element found"
     true
   rescue Selenium::WebDriver::Error::NoSuchElementError
     false
@@ -86,7 +131,8 @@ class PortalBaseObject
 
   def save_screenshot(dir,page_title)
     puts "in get_screenshot"
-    @@driver.save_screenshot "#{dir}/#{page_title}#{Time.now.strftime("_%d_%m_%Y__%H_%M_%S")}.png"
+    file_name = page_title.gsub(/[\/\s]/, '_')
+    @@driver.save_screenshot "#{dir}/#{file_name}.png"
   end
 
   def write_log_file(dir_path, filename)
@@ -101,6 +147,18 @@ class PortalBaseObject
     else
       File.open("#{dir_path}/#{filename}.txt", "a") do |log|
         log << messages unless messages == ""
+      end
+    end
+  end
+
+  def write_to_file(dir_path, filename, message)
+    if !File.exist?("#{dir_path}/#{filename}.txt")
+      File.open("#{dir_path}/#{filename}.txt", "wb") do |responses|
+        responses<< message unless message == ""
+      end
+    else
+      File.open("#{dir_path}/#{filename}.txt", "a") do |responses|
+        responses << message unless message == ""
       end
     end
   end
@@ -125,36 +183,49 @@ class PortalBaseObject
   end
 
   def switch_to_dialog(dialog)
+    puts "In switch to dialog"
     @@driver.switch_to.alert()
   end
 
-  def switch_to_active_modal
-    @@driver.switch_to.active_element
+  def switch_to_iframe(locator)
+    puts "In switch to iframe"
+    @@driver.switch_to.frame(locator)
   end
 
-  def select_menu_item(menu, menu_item)
-    puts 'in select_menu_item'
-    find(menu)
-    wait_for {displayed? (menu_item)}
-    click_on(menu_item)
+  def get_tab_handles
+    return @@driver.window_handles
   end
 
-  def drag_attribute(source_element, target_element)
-    #drag_scroller
-    #drag_scroller_right
-    source_loc = get_column_header(source_element)
-    case (target_element)
-      when 'x'
-        target_loc = find(GRAPH_H_AXIS)
-      when 'y'
-        target_loc = find(GRAPH_V_AXIS)
-      when 'graph_legend'
-        target_loc = find(GRAPH_PLOT_VIEW)
-        wait_for { displayed?(GRAPH_LEGEND)}
-      when 'map_legend'
-        target_loc = find(MAP_LEGEND)
-    end
-    @@driver.action.drag_and_drop(source_loc, target_loc).perform
+  def switch_to_tab(handle)
+    puts "in switch to tab"
+    @@driver.switch_to.window(handle)
   end
+
+  def switch_to_main()
+    puts "in switch to main"
+    @@driver.switch_to.default_content
+  end
+
+  def switch_to_first_tab()
+    puts "in switch to first tab"
+    @@driver.switch_to.window(@@driver.window_handles.first)
+    window_handle = @@driver.window_handles.first
+    return window_handle
+  end
+
+  def switch_to_last_tab()
+    puts "in switch to last tab"
+    # @@driver.action.send_keys(:control + :tab).perform
+    @@driver.switch_to.window(@@driver.window_handles.last)
+    window_handle = @@driver.window_handles.last
+    return window_handle
+  end
+
+  def close_tab(handle)
+    puts "in close tab"
+    @@driver.switch_to.window(handle)
+    @@driver.close
+  end
+
 
 end
