@@ -5,7 +5,7 @@ class SearchPageObject < PortalBaseObject
   SEQUENCE_CHECKBOX = {id: 'investigation'}
   ACTIVITIES_CHECKBOX = {id: 'Activity'}
   INTERACTIVE_CHECKBOX = {id: 'Interactive'}
-  RUNS_IN_BROWSER_CHCECKBOX = {id: 'runs_in_browser'}
+  RUNS_IN_BROWSER_CHECKBOX = {id: 'runs_in_browser'}
   REQUIRES_DOWNLOAD_CHECKBOX = {id: 'requires_download'}
   TOTAL_NUM_MATERIALS = {css: '.materials_container > div:nth-child(2) > p:nth-child(1) > span:nth-child(1) > b:nth-child(2)'}
   NEXT_PAGE = {css: '.next'}
@@ -26,7 +26,7 @@ class SearchPageObject < PortalBaseObject
       when 'interactive'
         click_on(INTERACTIVE_CHECKBOX)
       when 'run in browser'
-        click_on(RUNS_IN_BROWSER_CHCECKBOX)
+        click_on(RUNS_IN_BROWSER_CHECKBOX)
       when 'requires download'
         click_on(REQUIRES_DOWNLOAD_CHECKBOX)
     end
