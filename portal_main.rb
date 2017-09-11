@@ -7,6 +7,7 @@ class PortalMainObject < PortalBaseObject
   include PortalLandingObject
   include LoginModalObject
   include LearnHeaderObject
+  include CollectionPageObject
 
 
   def initialize()
@@ -17,8 +18,7 @@ class PortalMainObject < PortalBaseObject
   def verify_element(element)
 
   end
-
-
+  
   def wait_for(seconds=25)
     puts "Waiting"
     Selenium::WebDriver::Wait.new(:timeout => seconds).until { yield }
