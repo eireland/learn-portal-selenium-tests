@@ -6,7 +6,7 @@ require './collection_page_object'
 require './about_page_object'
 require './home_page_object'
 
-class PortalMainObject < PortalBaseObject
+class PortalMainObject < BaseObject
   include PortalLandingObject
   include LoginModalObject
   include LearnHeaderObject
@@ -19,9 +19,6 @@ class PortalMainObject < PortalBaseObject
   end
 
   private
-  def verify_element(element)
-
-  end
 
   def wait_for(seconds=25)
     puts "Waiting"
