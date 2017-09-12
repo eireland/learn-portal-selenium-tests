@@ -4,6 +4,7 @@ require './portal_landing_object'
 require './learn_header_object'
 require './collection_page_object'
 require './about_page_object'
+require './home_page_object'
 
 class PortalMainObject < PortalBaseObject
   include PortalLandingObject
@@ -11,7 +12,7 @@ class PortalMainObject < PortalBaseObject
   include LearnHeaderObject
   include CollectionPageObject
   include AboutPageObject
-
+  include HomePageObject
 
   def initialize()
     puts "Initializing"

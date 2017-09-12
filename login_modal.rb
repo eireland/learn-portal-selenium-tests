@@ -6,17 +6,19 @@ module LoginModalObject
   #log-in > div.col-50.left > form > dl > dd:nth-child(2) > input
 
   LOGIN_MODAL = {id: 'login-default-modal'}
+  LOGIN_MODAL_HEADER = {css: '#login-default-modal > div > form > h2 > strong'}
   LOGIN_SUBMIT_BUTTON = {css: '.login-default-modal-content > .signup-form > .submit_button-container > .submit-btn'}
   LOGIN_MODAL_GOOGLE_OPTION = {id: 'google'}
   LOGIN_MODAL_SCHOOLOGY_OPTION = {id: 'schoology'}
   LOGIN_MODAL_FORGOT_PASSWORD = {xpath: "#login-default-modal > div > form > div.submit-button-container > a"}
-
+  USERNAME = {xpath: '//div[contains(@class,"text-input")]/input[contains(@type,"text")]'}
+  PASSWORD = {xpath: '//div[contains(@class,"text-input")]/input[contains(@type,"password")]'}
   MODAL_CLOSE = {css: '.portal-page-close'}
 
   def login(username,password)
     puts "in login"
     sleep(2)
-    switch_to_active_modal
+    # switch_to_active_modal
     login_modal = find(LOGIN_MODAL)
     puts ("login_modal is #{login_modal}")
     find(USERNAME)
@@ -32,7 +34,7 @@ module LoginModalObject
     click_button('close_login')
   end
 
-  def click_button(button)
+  def click_modal_button(button)
     case (button)
       when 'login'
         element = LOGIN_BUTTON
