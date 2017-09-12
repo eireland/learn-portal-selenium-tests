@@ -1,9 +1,15 @@
 module LearnHeaderObject
   WELCOME_TEXT = {css: '.welcome-box>table>tbody>tr>td>b'}
-  LOGOUT = {xpath: '//div[@class="welcome-box"]/table/tbody/tr/td/a[contains(text(),"Logout")]'}
+  LOGOUT = {xpath: "//li[contains(@class,'portal-pages-main-nav-item')]/a[contains(@title,'Log Out')]"}
   LOGOUT_SUCCESS = {xpath: '//div[(@class="flash notice") and contains(text(),"Signed out successfully")]'}
-  TOP_NAV_BAR_LIST = {css: '#nav_top>ul>li'}
 
+  LOGIN_BUTTON = {css: '.portal-pages-main-nav-item > .log-in'}
+  REGISTER_BUTTON = {css: '.portal-pages-main-nav-item > .register'}
+  COLLECTION_LINK = {css: '.portal-pages-main-nav-collections'}
+  ABOUT_LINK = {css: '.portal-pages-main-nav-about'}
+  SRF_HOME_LINK = {css: '.concord-logo'}
+
+  SRF_HEADER = {xpath: '//h1[contains(text(),"Interactive STEM activities")]'}
 
   def verify_auth_user(user)
     puts "In verify_auth_user"
@@ -72,4 +78,18 @@ module LearnHeaderObject
       end
     end
   end
+
+  def click_link(link)
+    case (link)
+      when "collection"
+        element = COLLECTION_LINK
+      when "about"
+        element = ABOUT_LINK
+      when "logo"
+        element = SRF_HOME_LINK
+    end
+    wait_for {displayed? (element)}
+    click_on(element)
+  end
+
 end

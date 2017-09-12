@@ -5,4 +5,11 @@ module CollectionPageObject
   COLLECTION_CARD_NAME = {css: '.portal-pages-collections-card-name'}
   COLLECTION_CARD_DESCRIPTION = {css: '.portal-pages-collections-card-description'}
   SRF_HOME_LINK = {css: '.special-link'}
+
+  def verify_collection_page
+    wait_for {displayed? (COLLECTION_HEADER)}
+    return true
+  end
+
+
 end

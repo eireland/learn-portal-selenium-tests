@@ -227,5 +227,4 @@ class PortalBaseObject
     @@driver.close
   end
 
-
 end
