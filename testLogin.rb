@@ -13,7 +13,7 @@ admin_password = 'ETestadmin'
 learn = PortalMainObject.new()
 learn.setup_one(:chrome)
 learn.visit(url)
-learn.verify_page("Learn")
+learn.verify_page("STEM Resource Finder")
 learn.click_button('login')
 learn.login(admin_name,admin_password)
 if learn.verify_auth_user('admin')

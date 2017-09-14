@@ -1,6 +1,7 @@
 module HomePageObject
   WELCOME_TEXT = {css: '#utility-links > p > strong'} #utility-links > p > strong
   AUX_LINKS = {css: ".aux-links > li"}
+  RUN__SOLO_BUTTON ={css: 'div.run_buttons > a.solo.button'}
 
 
 
@@ -62,4 +63,9 @@ module HomePageObject
       end
     end
   end
+
+  def run_activity_solo
+    click_on(RUN_SOLO_BUTTON)
+  end
+
 end

@@ -1,4 +1,4 @@
-require './portal_base_object'
+require './base_object'
 require './login_modal'
 require './portal_landing_object'
 require './learn_header_object'
