@@ -1,7 +1,7 @@
 module HomePageObject
   WELCOME_TEXT = {css: '#utility-links > p > strong'} #utility-links > p > strong
   AUX_LINKS = {css: ".aux-links > li"}
-  RUN__SOLO_BUTTON ={css: 'div.run_buttons > a.solo.button'}
+  RUN_SOLO_BUTTONS ={css: '.run_buttons > .solo'}
 
 
 
@@ -65,7 +65,9 @@ module HomePageObject
   end
 
   def run_activity_solo
-    click_on(RUN_SOLO_BUTTON)
+    puts "in run activity solo"
+    solo_buttons = find_all(RUN_SOLO_BUTTONS)
+    solo_buttons[0].click
+    sleep(3)
   end
-
 end

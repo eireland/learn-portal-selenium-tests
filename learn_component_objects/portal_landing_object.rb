@@ -1,5 +1,4 @@
 module PortalLandingObject
-
   SRF_HEADER = {xpath: '//h1[contains(text(),"Interactive STEM activities")]'}
 
   SIGNUP_MODAL = {id: 'signup-default-modal'}
@@ -21,6 +20,7 @@ module PortalLandingObject
     wait_for {displayed? (SRF_HEADER)}
     return true
   end
+
 end
 
 

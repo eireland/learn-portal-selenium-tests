@@ -13,15 +13,11 @@ module LoginModalObject
   LOGIN_MODAL_FORGOT_PASSWORD = {xpath: "#login-default-modal > div > form > div.submit-button-container > a"}
   USERNAME = {xpath: '//div[contains(@class,"text-input")]/input[contains(@type,"text")]'}
   PASSWORD = {xpath: '//div[contains(@class,"text-input")]/input[contains(@type,"password")]'}
-  MODAL_CLOSE = {css: '.portal-page-close'}
+  MODAL_CLOSE = {css: '.portal-pages-close'}
 
   def login(username,password)
     puts "in login"
     sleep(2)
-    # switch_to_active_modal
-    login_modal = find(LOGIN_MODAL)
-    puts ("login_modal is #{login_modal}")
-    find(USERNAME)
     type(USERNAME, username)
     password_field = find(PASSWORD)
     type(PASSWORD, password)
@@ -29,9 +25,10 @@ module LoginModalObject
     sleep(4)
   end
 
-  def close_login
-    puts 'In login dialog'
-    click_button('close_login')
+  def close_modal
+    puts 'In close modal'
+    switch_to_main()
+    click_on(MODAL_CLOSE)
   end
 
   def click_modal_button(button)

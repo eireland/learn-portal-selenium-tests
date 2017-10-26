@@ -1,6 +1,6 @@
-require './portal_base_object.rb'
+require './learn_component_objects/portal_main_object.rb'
 
-class SearchPageObject < PortalBaseObject
+class SearchPageObject < PortalMainObject
 
   SEQUENCE_CHECKBOX = {id: 'investigation'}
   ACTIVITIES_CHECKBOX = {id: 'Activity'}

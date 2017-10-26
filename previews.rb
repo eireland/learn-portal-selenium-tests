@@ -1,4 +1,4 @@
-require './portal_base_object'
+require './portal_main_object'
 require './search_page_object'
 
 url = "https://learn.concord.org/search"
