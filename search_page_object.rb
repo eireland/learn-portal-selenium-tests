@@ -1,6 +1,4 @@
-require './learn_component_objects/portal_main_object.rb'
-
-class SearchPageObject < PortalMainObject
+module SearchPageObject
 
   SEQUENCE_CHECKBOX = {id: 'investigation'}
   ACTIVITIES_CHECKBOX = {id: 'Activity'}
@@ -11,10 +9,6 @@ class SearchPageObject < PortalMainObject
   NEXT_PAGE = {css: '.next'}
   PREVIEW_BUTTON = {xpath: '//a[contains(text(),"Preview")]'}
   MATERIAL_TITLE = {css: ".material_list_item"}
-
-  def initialize()
-    puts "Initializing"
-  end
 
   def click_on_filter(filter)
     puts "In click on filter. filter is #{filter}"
