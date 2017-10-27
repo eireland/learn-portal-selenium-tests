@@ -1,4 +1,4 @@
-require '~/development/learn-portal-selenium-tests/base_object'
+require './base_object'
 require './learn_component_objects/login_modal_object'
 require './learn_component_objects/portal_landing_object'
 require './learn_component_objects/learn_header_object'
