@@ -1,5 +1,5 @@
-require './portal_main_object'
-require './search_page_object'
+require './learn_component_objects/portal_main_object.rb'
+require './portal_pages_object.rb'
 
 url = "https://learn.concord.org/search"
 $test_screenshot_dir = "#{Dir.home}/Sites/learn_material_screenshot_results/test_screenshots/"
@@ -55,31 +55,31 @@ def verify_materials(ksearch)
 end
 
 
-search = SearchPageObject.new()
-search.setup_one(:chrome)
-search.manage_window_size
-search.visit(url)
+portal = PortalPagesObject.new()
+portal.setup_one(:chrome)
+portal.manage_window_size
+portal.visit(url)
 sleep(5)
 
 # click on Runs in Browser to only load online material vs. download id='#runs_in_browser'
-search.click_on_filter('run in browser')
+portal.click_on_filter('run in browser')
 sleep(2)
 # click on sequence filter to simplify how many materials are on each page id='#investigation'
-search.click_on_filter('sequence')
+portal.click_on_filter('sequence')
 sleep(2)
-verify_materials(search)
+verify_materials(portal)
 # unclick sequence filter
-search.click_on_filter('sequence')
+portal.click_on_filter('sequence')
 # click on activities filter
 sleep(2)
-search.click_on_filter('activity')
+portal.click_on_filter('activity')
 sleep(2)
-verify_materials(search)
+verify_materials(portal)
 # unclick activities filters
-search.click_on_filter('activity')
+portal.click_on_filter('activity')
 sleep(2)
 # click interactives
-search.click_on_filter('interactive')
+portal.click_on_filter('interactive')
 sleep(2)
-verify_materials(search)
+verify_materials(portal)
 # teardown browser

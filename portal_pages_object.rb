@@ -1,10 +1,10 @@
-require './base_object'
-require './learn_component_objects/portal_main_object'
-require './collection_page_object'
-require './about_page_object'
-require './search_pages_object'
+require '~/development/learn-portal-selenium-tests/base_object.rb'
+require './learn_component_objects/portal_main_object.rb'
+require './collection_page_object.rb'
+require './about_page_object.rb'
+require './search_page_object.rb'
 
-class  PortalPages < PortalMainObject
+class  PortalPagesObject < PortalMainObject
   include CollectionPageObject
   include AboutPageObject
   include HomePageObject
