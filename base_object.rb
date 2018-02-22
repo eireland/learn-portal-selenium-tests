@@ -6,6 +6,9 @@ class BaseObject
 
   def setup_one(browser)
     @@driver = Selenium::WebDriver.for browser
+    if browser!=:safari
+      manage_window_size
+    end
   rescue Exception => e
     puts e.message
     puts "Could not start driver #{@@driver}"
@@ -76,12 +79,18 @@ class BaseObject
 
   def visit(url='/')
     @@driver.get(url)
-    manage_window_size
+    # if browser
+    # manage_window_size
   end
 
   def verify_page(title)
     puts "Page title is #{@@driver.title}"
     expect(@@driver.title).to include(title)
+  end
+
+  def get_url
+    puts "In get url"
+    @@driver.current_url
   end
 
   def get_page_title
