@@ -64,10 +64,8 @@ module HomePageObject
     end
   end
 
-  def run_activity_solo
-    puts "in run activity solo"
-    solo_buttons = find_all(RUN_SOLO_BUTTONS)
-    solo_buttons[0].click
-    sleep(3)
+  def run_activity_solo(url)
+    puts "In run activity solo"
+    click_on(url)
   end
 end
