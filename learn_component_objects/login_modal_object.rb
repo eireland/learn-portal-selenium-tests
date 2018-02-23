@@ -5,6 +5,8 @@ module LoginModalObject
   # CLOSE_MODAL = {class: 'close'}
   #log-in > div.col-50.left > form > dl > dd:nth-child(2) > input
 
+  LOGIN_BUTTON = {css: '.portal-pages-main-nav-item > .log-in'}
+  REGISTER_BUTTON = {css: '.portal-pages-main-nav-item > .register'}
   LOGIN_MODAL = {id: 'login-default-modal'}
   LOGIN_MODAL_HEADER = {css: '#login-default-modal > div > form > h2 > strong'}
   LOGIN_SUBMIT_BUTTON = {css: '.login-default-modal-content > .signup-form > .submit_button-container > .submit-btn'}
@@ -37,16 +39,11 @@ module LoginModalObject
         element = LOGIN_BUTTON
       when 'register'
         element = REGISTER_BUTTON
-      when 'close_login'
-        element = LOGIN_MODAL_CLOSE
-      when 'close_signup'
-        element = SIGNUP_MODAL_CLOSE
-      when 'search'
-        element = SEARCH_BUTTON
+      when 'close_'
+        element = MODAL_CLOSE
     end
     wait_for {displayed? (element)}
     click_on(element)
-    # verify_element(element)
   end
 
 end
