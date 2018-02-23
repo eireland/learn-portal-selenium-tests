@@ -24,6 +24,7 @@ PRINT_DIALOG_SAVE_BUTTON = {css: '#print-header > div > button.print.default'}
 
 learn_url = 'https://learn.staging.concord.org'
 shutterbug_url = 'https://authoring.staging.concord.org/activities/762/'
+activity_url = {xpath: '//div[contains(@class,"run_buttons")]/a[contains(@href,"offerings/901.run_resource_html")]'}
 
 student_name = 'dnoble'
 student_password = 'tardis'
@@ -41,9 +42,10 @@ if learn.verify_auth_user('admin')
 else
   puts "auth not verified"
 end
-learn.run_activity_solo
+learn.run_activity_solo(activity_url)
 sleep(2)
-learn.visit(shutterbug_url)
+learn.switch_to_last_tab
+sleep(10)
 lara.verify_activity('Shutterbug Smoke Test')
 
 pages = lara.get_pages()
